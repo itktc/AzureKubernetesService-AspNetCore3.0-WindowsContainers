@@ -86,9 +86,7 @@ steps:
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
-- task: VSBuild@1
-  inputs:
-    solution: '**\*.sln'
+    
 - task: IISWebAppManagementOnMachineGroup@0
   inputs:
     EnableIIS: true
