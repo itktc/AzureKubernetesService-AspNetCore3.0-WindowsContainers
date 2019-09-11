@@ -25,7 +25,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: 'Install .net core 3.0 (preview)'
   inputs:
-    version: '3.0.100-preview6-012264'
+    version: '3.0.100-preview9-014004'
 
 - task: VSBuild@1
   inputs:
