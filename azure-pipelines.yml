@@ -32,16 +32,56 @@ steps:
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: '--configuration 3.0.100-preview9-014004' 
+    arguments: '--configuration Release'
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@0
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: test
+    projects: '**/*Tests/*.csproj'
 
-- task: VSTest@2
+- script: dotnet test <test-project> --logger trx
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+- script: dotnet test <test-project> --logger trx --collect "Code coverage"
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+- task: DotNetCoreCLI@0
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'Jewel'
+
+- script: dotnet pack /p:PackageVersion=$(version)  # define version variable elsewhere in your pipeline
+- task: NuGetCommand@2
+  inputs:
+    command: push
+    nuGetFeedType: external
+    publishFeedCredentials: 'nugetCore'
+    versioningScheme: byEnvVar
+    versionEnvVar: version
+
+- task: DotNetCoreCLI@0
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
