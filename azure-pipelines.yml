@@ -86,11 +86,20 @@ steps:
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
-
-- task: IISWebAppDeploymentOnMachineGroup@0
-  inputs:
-    WebSiteName: 'test1111.tev'
-    Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
 - task: VSBuild@1
   inputs:
     solution: '**\*.sln'
+- task: IISWebAppManagementOnMachineGroup@0
+  inputs:
+    EnableIIS: true
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'CreateOrUpdateWebsite'
+    WebsiteName: 'test1111.tev'
+    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
+    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+    AddBinding: true
+    CreateOrUpdateAppPoolForWebsite: true
+    ConfigureAuthenticationForWebsite: true
+    DotNetVersionForWebsite: 'v4.0'
+    PipeLineModeForWebsite: 'Integrated'
+    AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
