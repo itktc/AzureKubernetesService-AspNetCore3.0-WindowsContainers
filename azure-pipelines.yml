@@ -22,18 +22,10 @@ steps:
     feedsToUse: 'select'
     vstsFeed: 'ef12e44a-f0a3-441c-97ab-d286a9cae562'
 
-- task: UseDotNet@2
+- task: DotNetCoreInstaller@0
+  displayName: 'Install .net core 3.0 (preview)'
   inputs:
-    packageType: 'sdk'
-    version: '3.0.0'
-    includePreviewVersions: true
-    performMultiLevelLookup: true
-    
-- task: set-dotnetcore-assembly-version@2
-  inputs:
-    sourceDirectory: '$(Build.SourcesDirectory)'
-    solutionSearchPattern: '**/*!(tests).csproj'
-    assemblyVersion: '$(Build.BuildNumber)'
+    version: '3.0.100-preview6-012264'
 
 - task: VSBuild@1
   inputs:
