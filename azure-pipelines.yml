@@ -80,28 +80,4 @@ steps:
     versioningScheme: byEnvVar
     versionEnvVar: version
 
-- task: IISWebAppDeploymentOnMachineGroup@0
-  displayName: 'IIS Web App Deploy'
-  inputs:
-    WebSiteName: '$(Parameters.WebsiteName)'
-    VirtualApplication: 'jewel-gem'
-    TakeAppOfflineFlag: True
-    XmlVariableSubstitution: True
-
-- task: IISWebAppManagementOnMachineGroup@0
-  inputs:
-    EnableIIS: true
-    IISDeploymentType: 'IISWebsite'
-    ActionIISWebsite: 'CreateOrUpdateWebsite'
-    WebsiteName: 'jewel-gem'
-    Package: '$(Build.ArtifactStagingDirectory)\**\*.zip'
-    WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
-    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
-    AddBinding: true
-    CreateOrUpdateAppPoolForWebsite: true
-    ConfigureAuthenticationForWebsite: true
-    DotNetVersionForWebsite: 'v4.0'
-    PipeLineModeForWebsite: 'Integrated'
-    AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
-
 - task: 'PublishBuildArtifacts@1'
