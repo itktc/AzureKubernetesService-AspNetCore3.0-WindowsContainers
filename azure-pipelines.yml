@@ -27,6 +27,13 @@ steps:
   inputs:
     version: '3.0.100-preview9-014004'
 
+- task: DotNetCoreCLI@0
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration 3.0.100-preview9-014004' 
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
