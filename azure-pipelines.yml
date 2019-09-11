@@ -32,7 +32,7 @@ steps:
   inputs:
     command: build
     projects: '**/*.csproj'
-    arguments: '--configuration Release'
+    arguments: '--configuration monitor_control.disable_longmode = TRUE, Release'
 
 - task: DotNetCoreCLI@0
   inputs:
