@@ -15,7 +15,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-
 - task: NuGetCommand@2
   inputs:
     command: 'restore'
@@ -23,12 +22,15 @@ steps:
     feedsToUse: 'select'
     vstsFeed: 'ef12e44a-f0a3-441c-97ab-d286a9cae562'
 
+- task: set-dotnetcore-assembly-version@2
+  inputs:
+    sourceDirectory: '$(Build.SourcesDirectory)'
+    solutionSearchPattern: '**/*!(tests).csproj'
+    assemblyVersion: '$(Build.BuildNumber)'
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: 'v3.0.0-preview9'
     includePreviewVersions: true
-    performMultiLevelLookup: true
 
 - task: VSBuild@1
   inputs:
