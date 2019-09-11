@@ -104,4 +104,4 @@ steps:
     PipeLineModeForWebsite: 'Integrated'
     AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
 
-- task: PublishBuildArtifacts@1"
+- task: 'PublishBuildArtifacts@1'
