@@ -75,7 +75,8 @@ steps:
   inputs:
     command: push
     nuGetFeedType: external
-    publishFeedCredentials: 'ef12e44a-f0a3-441c-97ab-d286a9cae562'
+    publishVstsFeed: 'ef12e44a-f0a3-441c-97ab-d286a9cae562'
+    allowPackageConflicts: true
     versioningScheme: byEnvVar
     versionEnvVar: version
 
