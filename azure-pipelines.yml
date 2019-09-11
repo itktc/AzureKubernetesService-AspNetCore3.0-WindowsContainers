@@ -75,6 +75,8 @@ steps:
   inputs:
     command: push
     nuGetFeedType: external
+    feedsToUse: 'select'
+    vstsFeed: 'ef12e44a-f0a3-441c-97ab-d286a9cae562'
     publishFeedCredentials: 'nugetCore'
     versioningScheme: byEnvVar
     versionEnvVar: version
