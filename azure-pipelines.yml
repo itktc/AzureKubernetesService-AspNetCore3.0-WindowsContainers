@@ -86,3 +86,15 @@ steps:
     publishWebProjects: True
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: True
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    msbuildArchitecture: 'x64'
+
+- task: IISWebAppDeploymentOnMachineGroup@0
+  inputs:
+    WebSiteName: 'test1111.tev'
+    Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
