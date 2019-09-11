@@ -46,7 +46,7 @@ steps:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
 
-- task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@0
   inputs:
     command: test
     projects: '**/*Tests/*.csproj'
@@ -70,7 +70,7 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'Jewel'
 
-- script: dotnet pack /p:PackageVersion=$(version)  # define version variable elsewhere in your pipeline
+- script: dotnet pack /p:PackageVersion=1.0.0  # define version variable elsewhere in your pipeline
 - task: NuGetCommand@2
   inputs:
     command: push
