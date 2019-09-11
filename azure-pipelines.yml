@@ -103,3 +103,5 @@ steps:
     DotNetVersionForWebsite: 'v4.0'
     PipeLineModeForWebsite: 'Integrated'
     AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
+
+- task: PublishBuildArtifacts@1"
