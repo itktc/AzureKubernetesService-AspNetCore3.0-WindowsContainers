@@ -28,6 +28,12 @@ steps:
     version: '3.0.100-preview9-014004'
 
 - task: DotNetCoreCLI@0
+  displayName: Restore
+  inputs:
+    command: restore
+    projects: '**/Api*.csproj'
+    
+- task: DotNetCoreCLI@0
   displayName: Build
   inputs:
     command: build
